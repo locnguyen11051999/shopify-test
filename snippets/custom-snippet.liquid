@@ -1,0 +1,35 @@
+{% liquid 
+    assign image = settings.image
+    assign text = settings.text | default: null
+    assign description = settings.description | default: null
+    assign truncate_words = settings.description | truncatewords: 10 | remove: '...' 
+    assign remain_words = settings.description | replace: truncate_words, ''
+%}
+
+<div class="flex w-full xl:w-item-large md:w-item-medium flex-col bg-black">
+    <img class="max-h-[101px] object-cover w-full rounded-t-[4px]" width="354" height="101" src="{{ image | img_url: 'master' }}" alt="{{ text }}">
+    <div class="flex flex-col items-center pt-[26px] pb-[18px] gap-[17px] md:gap-[15px] md:pt-[31px] md:pb-[19px] text-collapse">
+        {% if text %}
+          <h3 class="font-header text-sm text-white leading-[10px] uppercase mb-[4px]">{{ text }}</h3>
+        {% endif %}
+        {% if description %}
+          <div class="flex flex-col w-full items-center transition-all">
+              <p class="font-base leading-10 transition-all tracking-[-1px] text-color text-center w-3/4 text-description">
+                <span class="text-truncate transition-all">{{ truncate_words }}</span>
+                {% if remain_words and remain_words != blank %}
+                    <span class="text-dots">...</span>
+                    <span class="text-remain transition-all">{{ remain_words }}</span>
+                {% endif %}
+              </p>
+          </div>
+          {% if remain_words and remain_words != blank %}
+            <div class="btn-expand flex items-center justify-center w-[34px] h-[34px] bg-deep-blue rounded-full cursor-pointer transition-all hover:opacity-40 shrink-0">
+                {% render 'icon-expand' %}
+            </div>
+            <div class="btn-collapse flex items-center justify-center w-[34px] h-[34px] bg-deep-blue rounded-full cursor-pointer hover:opacity-40 transition-all shrink-0">
+                {% render 'icon-collapse' %}
+            </div>
+          {% endif %}
+        {% endif %}
+    </div>
+</div>

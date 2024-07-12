@@ -1,0 +1,89 @@
+{{ 'custom-output.css' |  asset_url |  stylesheet_tag }}
+{{ 'custom.js' |  asset_url |  script_tag }}
+
+{%  liquid  
+  
+  assign settings = section.settings
+  
+  assign blocks = section.blocks
+  
+  assign header = settings.header | default: null
+
+  assign description = settings.description | default: null
+%}
+
+<div class="flex w-full items-center flex-col bg-deep-blue py-[29px] px-[20px] gap-[38px] md:py-[100px] md:px-[30px] md:gap-[51px]">
+    <div class="flex flex-col items-center">
+        {% if header %}
+          <h2 class="font-header text-white text-large leading-[29px] text-center w-3/4 md:w-full md:text-xl md:leading-[54px] tracking-[-1px]">
+            {{ header }}
+          </h2>
+        {% endif %}
+        {% if header and description %}
+          <span class="block h-px w-8 bg-white mt-[26px] mb-[22px] md:mt-[25px] md:mb-[30px]"></span>
+        {% endif %}
+        {% if description %}
+          <p class="text-base font-sans text-color text-center w-full leading-[24px] tracking-[-1px] px-[5px] md:px-0 md:w-7/12">{{ description }}</p>
+        {% endif %}
+    </div>
+    <div class="flex w-full flex-column flex-wrap gap-[23px] rounded-t-[4px] md:gap-[30px] md:flex-row">
+        {% for block in blocks %}
+            {% render 'custom-snippet', settings: block.settings %}
+        {% endfor %}
+    </div>
+</div>
+
+{% schema %}
+    {
+      "name": "Custom Section",
+      "max_blocks": 12,
+      "class": "custom-section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "header",
+          "default": "Experienced & Multi-Talented",
+          "label": "Header"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam tortor leo, porttitor vel dictum at, aliquam et augue. Duis vel molestie risus, ut lobortis felis.",
+          "label": "Description"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "custom-block",
+          "name": "Block",
+          "settings": [
+            {
+                "type": "image_picker",
+                "id": "image",
+                "label": "Image"
+            },
+            {
+              "type": "text",
+              "id": "text",
+              "default": "Block",
+              "label": "Header"
+            },
+            {
+              "type": "textarea",
+              "id": "description",
+              "label": "Description",
+              "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
+            }
+          ]
+        }
+      ],
+      "presets": [
+        {
+          "name": "Custom Section",
+          "blocks": [
+
+          ]
+        }
+      ]
+    }
+    {% endschema %}

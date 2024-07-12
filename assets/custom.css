@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-expand:hover svg {
+    transform: rotate(180deg);
+}
+
+.text-full {
+    transition: all 0.3s ease-in-out;
+}
+
+.text-collapse .text-full {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.text-expand .text-truncate {
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.text-expand .text-full {
+    height: 100%;
+    opacity: 1;
+}
+
+.text-expand .btn-expand {
+    display: none;
+}
+
+.text-collapse .btn-collapse {
+    display: none;
+}

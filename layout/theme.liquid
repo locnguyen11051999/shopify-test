@@ -283,6 +283,27 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+    <style>
+      @font-face {
+          font-family: 'Gotham Bold';
+          src: url('{{ 'Gotham-Bold.ttf' |  asset_url }}') format('truetype');
+          font-weight: bold;
+          font-style: normal;
+          font-display: swap;
+      }
+
+      @font-face {
+          font-family: 'Proxima Nova';
+          src: url('{{ 'ProximaNova-Regular.ttf' |  asset_url }}') format('truetype');
+          font-weight: normal;
+          font-style: normal;
+          font-display: swap;
+      }
+
+    </style>
+    <script src="https://cdn.tailwindcss.com/3.4.4"></script>
+
+    {{ 'tailwind-config.js' |  asset_url |  script_tag }}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
